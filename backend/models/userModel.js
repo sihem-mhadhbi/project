@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
     name: {
       type: String,
       required: true,
@@ -19,24 +16,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-    isDonor: {
-      type: Boolean,
-      default: false,
-    },
-    isRecipient: {
-      type: Boolean,
-      default: false,
-    },
+
     bloodGroup: {
       type: String,
     },
     isAccepted: {
       type: Boolean,
       default: false,
+    },
+
+    role: {
+      type: String,
+      enum: ["isRecipient", " isDonor", "isAdmin"],
     },
     dueDateRequest: {
       type: Date,

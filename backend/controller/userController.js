@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const controller = {};
 /**
  * @Route POST /api/user
- * @Access Private
+ * @Access Public
  * @Desc  User register
  */
 
@@ -83,6 +83,7 @@ controller.createUser = async (req, res) => {
     res.status(500).send("server error!...");
   }
 };
+
 /**
  *
  * @Route GET /api/user/:id
@@ -184,6 +185,46 @@ controller.deleteUser = async (req, res) => {
     res.status(500).send("server error");
   }
 };
+/**
+ * @Route POST /api/login
+ * @Access Public
+ * @Desc  login user and get token
+ */
+controller.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password)
+      return res.status(400).json({ msg: "please add all fields" });
+    const User = await user.findOne({ email });
+    let isValidPassword = false;
+    if (User) {
+      isValidPassword = await bcrypt.compare(password, User.password);
+    }
+    if (User && isValidPassword) {
+      res.status(200).json({
+        _id: User._id,
+        name: User.name,
+        email: User.email,
+        token: generateToken(User._id),
+      });
+    } else {
+      res.status(400).json({ msg: "Invalid credential" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+};
+
+/**
+ * @Route POST /api//user/me
+ * @Access Private
+ * @Desc  get logged in user
+ */
+controller.getMe = async (req, res) => {
+  res.status(201).json(req.user);
+};
+
 //generate token
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });

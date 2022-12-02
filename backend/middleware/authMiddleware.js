@@ -1,5 +1,4 @@
-/*const jwt = require("jsonwebtoken");
-
+const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
 const protect = async (req, res, next) => {
   let token;
@@ -9,11 +8,11 @@ const protect = async (req, res, next) => {
   ) {
     try {
       //get token from header
-      token = req.header.authorization.split(" ")[1];
+      token = req.headers.authorization.split(" ")[1];
       //verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       //get users from token
-      req.User = await user.findById(decoded.id).select("-password");
+      req.User = await user.findById(decoded.id).select("password");
       next();
     } catch (err) {
       console.error(err.message);
@@ -25,4 +24,4 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = protect;*/
+module.exports = protect;
