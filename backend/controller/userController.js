@@ -17,14 +17,13 @@ controller.createUser = async (req, res) => {
     name,
     email,
     password,
-    isAdmin,
-    isDonor,
-    isRecipient,
+    role,
     bloodGroup,
     isAccepted,
-    dueDate,
+    dueDateRequest,
     phone,
     date,
+    address,
   } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -36,21 +35,6 @@ controller.createUser = async (req, res) => {
     if (userExists)
       return res.status(400).json({ errors: [{ message: "existing user" }] });
 
-    // new user in data base
-    /*User = new user({
-      name,
-      email,
-      password,
-      isAdmin,
-      isDonor,
-      isRecipient,
-      bloodGroup,
-      isAccepted,
-      dueDate,
-      phone,
-      date,
-    });*/
-
     // hash du password
     const salt = await bcrypt.genSalt(10);
     hashedPassword = await bcrypt.hash(password, salt);
@@ -59,20 +43,24 @@ controller.createUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      isAdmin,
-      isDonor,
-      isRecipient,
+      role,
       bloodGroup,
       isAccepted,
-      dueDate,
+      dueDateRequest,
       phone,
       date,
+      address,
     });
     if (User) {
       res.status(201).json({
         _id: User._id,
         name: User.name,
         email: User.email,
+        role: User.role,
+        phone: User.phone,
+        bloodGroup: User.bloodGroup,
+        address: User.address,
+
         token: generateToken(User._id),
       });
     } else {
@@ -106,7 +94,7 @@ controller.getUser = async (req, res) => {
  * @Desc get all users
  * @Access private
  */
-controller.getUsers = async (req, res) => {
+controller.getUsers = async (req, res, next) => {
   try {
     const users = await user.find();
     res.json(users);
@@ -217,12 +205,12 @@ controller.loginUser = async (req, res) => {
 };
 
 /**
- * @Route POST /api//user/me
+ * @Route GET /api/user/me
  * @Access Private
  * @Desc  get logged in user
  */
 controller.getMe = async (req, res) => {
-  res.status(201).json(req.user);
+  res.status(200).json(req.User);
 };
 
 //generate token

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
+
 const protect = async (req, res, next) => {
   let token;
   if (
@@ -7,20 +8,23 @@ const protect = async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      //get token from header
+      // Get token from header
       token = req.headers.authorization.split(" ")[1];
-      //verify token
+
+      // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      //get users from token
-      req.User = await user.findById(decoded.id).select("password");
+
+      // Get user from token
+      req.User = await user.findById(decoded.id).select("-password");
+
       next();
     } catch (err) {
       console.error(err.message);
-      res.status(401).json({ msg: "Not authorized" });
+      res.status(401).json({ msg: "Not authorised" });
     }
   }
   if (!token) {
-    return res.status(401).json({ msg: "No token , authorization denied" });
+    return res.status(401).json({ msg: "No token, authorization denied" });
   }
 };
 

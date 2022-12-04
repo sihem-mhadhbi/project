@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["isRecipient", " isDonor", "isAdmin"],
+      enum: ["isRecipient", "isDonor", "isAdmin"],
+      required: true,
     },
     dueDateRequest: {
       type: Date,
