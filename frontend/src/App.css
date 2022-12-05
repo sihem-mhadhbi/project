@@ -1,38 +1,69 @@
-.App {
+.site-page-header {
+  border: 1px solid rgb(235, 237, 240);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.brandname {
+  font-family: "Roboto";
+  color: #f50057;
+}
+
+.brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2%;
+}
+
+.centered {
+  justify-content: center;
+  align-items: center;
+}
+
+.lg-logo {
+  justify-content: center;
+  align-items: center;
+  margin: 5% 45% 1%;
+}
+
+.lg-desc {
+  justify-content: center;
+  align-items: center;
+  padding: 0% 15%;
+}
+
+.c-desc {
+  font-size: medium;
+  font-family: "Roboto", "Arial";
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.lg-btns {
+  display: flex;
+  padding: 0% 40%;
+  justify-content: space-around;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.home-btn {
+  margin-left: 2px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  margin-top: 2%;
 }
 
-.App-link {
-  color: #61dafb;
+.val {
+  width: 200%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.er {
+  border-color: crimson;
 }
