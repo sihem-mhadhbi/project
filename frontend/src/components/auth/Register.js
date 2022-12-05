@@ -75,10 +75,12 @@ const Register = () => {
             <option selected>BloodGroup</option>
             <option value="1">A+</option>
             <option value="2">B+</option>
-            <option value="3">AB</option>
-            <option value="4">O</option>
-            <option value="5">O+</option>
-            <option value="6">O-</option>
+            <option value="3">AB+</option>
+            <option value="4">A-</option>
+            <option value="5">B-</option>
+            <option value="6">AB-</option>
+            <option value="7">O+</option>
+            <option value="8">O-</option>
           </select>
 
           <div className="d-grid gap-2">
