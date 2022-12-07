@@ -4,8 +4,12 @@ export const Navbar = () => {
   return (
     <div>
       <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+        <div class="container-fluid ">
+          <a
+            class="navbar-brand  border-bottom border-danger
+"
+            href="#"
+          >
             BloodBank
           </a>
           <button
@@ -24,14 +28,14 @@ export const Navbar = () => {
             <form class="d-flex">
               <button
                 style={{ margin: 6 }}
-                class="btn btn-outline-success"
+                class="btn btn-outline-danger"
                 type="submit"
               >
                 Login
               </button>
               <button
                 style={{ margin: 6 }}
-                class="btn btn-outline-success"
+                class="btn btn-outline-danger"
                 type="submit"
               >
                 Register
@@ -40,7 +44,6 @@ export const Navbar = () => {
           </div>
         </div>
       </nav>
-      ;
     </div>
   );
 };
