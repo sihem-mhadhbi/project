@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 
 const controller = {};
 /**
- * @Route POST /api/user
+ * @Route POST /api/user/register
  * @Access Public
  * @Desc  User register
  */
