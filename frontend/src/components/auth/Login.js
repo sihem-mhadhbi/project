@@ -1,15 +1,20 @@
-import React, { Component, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import "./Login.css";
 import {
   FacebookLoginButton,
   InstagramLoginButton,
 } from "react-social-login-buttons";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/action/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { login, clearError } from "../../redux/action/authActions";
+import { useNavigate } from "react-router-dom";
+import { setAlert } from "../../redux/action/alertAction";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { error, isAuthenticated } = useSelector((state) => state.authReducer);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -27,12 +32,24 @@ const Login = () => {
       dispatch(login(formData));
     }
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+    if (error && error.msg === "Invalid credential") {
+      dispatch(setAlert(error.msg, "danger"));
+      dispatch(clearError());
+    }
+  }, [error, isAuthenticated]);
 
   return (
     <div className="login">
       <div className="appAside" />
       <div className="appForm">
-        <div className="pageSwitcher">
+        <div
+          className="pageSwitcher d-flex justify-content-center
+"
+        >
           <div
             className="formCenter  pageSwitcherItem "
             activeClassName="pageSwitcherItem-active"
@@ -69,7 +86,7 @@ const Login = () => {
               </div>
 
               <div className="formField">
-                <button className="formFieldButton">Register</button>{" "}
+                <button className="formFieldButton">Login</button>{" "}
                 <Link to="/register" className="formFieldLink">
                   Create an account
                 </Link>

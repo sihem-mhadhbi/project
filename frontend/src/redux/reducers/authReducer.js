@@ -1,9 +1,11 @@
 import {
   AUTH_ERROR,
+  CLEAR_ERRORS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  USER_LOADED,
 } from "../action/types";
 
 const initialState = {
@@ -16,6 +18,13 @@ const initialState = {
 
 const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: payload,
+      };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
@@ -35,6 +44,11 @@ const authReducer = (state = initialState, { type, payload }) => {
         isAuthenticated: false,
         user: null,
         error: payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

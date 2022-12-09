@@ -3,15 +3,24 @@ import Login from "./components/auth/Login";
 import { Navbar } from "./components/layout/Navbar";
 import Register from "./components/auth/Register";
 import { Routes, Route } from "react-router-dom";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Alert } from "./components/layout/Alert";
 import Profile from "./components/auth/Profile";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./redux/action/authActions";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.token) {
+      dispatch(loadUser());
+    }
+  }, []);
   return (
     <div className="App">
       <Fragment>
         <Navbar />
+        <Alert />
         <div>
           <Routes>
             <Route path="/" element={<Home />} />

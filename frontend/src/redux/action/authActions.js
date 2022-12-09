@@ -1,7 +1,7 @@
 import axios from "axios";
-import res from "express/lib/response";
 import {
   AUTH_ERROR,
+  CLEAR_ERRORS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   REGISTER_FAIL,
@@ -48,4 +48,10 @@ export const login = (formData) => async (dispatch) => {
 
 export const logout = () => {
   return {};
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERRORS,
+  };
 };

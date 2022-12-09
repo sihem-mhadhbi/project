@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Login.css";
-import { useDispatch } from "react-redux";
-import { register } from "../../redux/action/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { clearError, register } from "../../redux/action/authActions";
+import { useNavigate } from "react-router-dom";
+import { setAlert } from "../../redux/action/alertAction";
 
 const Register = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { error, isAuthenticated } = useSelector((state) => state.authReducer);
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -27,12 +32,24 @@ const Register = () => {
       dispatch(register(formData));
     }
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+    if (error) {
+      dispatch(setAlert(error.msg, "danger"));
+      dispatch(clearError());
+    }
+  }, [error, isAuthenticated]);
 
   return (
     <div className="login">
       <div className="appAside" />
       <div className="appForm">
-        <div className="pageSwitcher">
+        <div
+          className="pageSwitcher d-flex justify-content-center
+"
+        >
           <div className="formCenter">
             <form className="formFields" onSubmit={onSubmit}>
               <div className="formField">
@@ -131,7 +148,7 @@ const Register = () => {
               </div>
 
               <div className="formField">
-                <button className="formFieldButton">Login</button>{" "}
+                <button className="formFieldButton">Register</button>{" "}
                 <Link to="/login" className="formFieldLink">
                   I'm already member
                 </Link>
