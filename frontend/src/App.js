@@ -8,6 +8,11 @@ import { Alert } from "./components/layout/Alert";
 import Profile from "./components/auth/Profile";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/action/authActions";
+import PrivateRoutes from "./components/routing/PrivateRoutes";
+import Dashboard from "./components/admin/Dashboard";
+import Requests from "./components/admin/Requests";
+import Donors from "./components/admin/Donors";
+import Accepted from "./components/admin/Accepted";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,9 +30,15 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
 
             <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/requests" element={<Requests />} />
+            <Route path="/donors" element={<Donors />} />
+            <Route path="/accepted" element={<Accepted />} />
           </Routes>
         </div>
       </Fragment>

@@ -32,8 +32,7 @@ controller.createUser = async (req, res) => {
   // check is user exist
   try {
     const userExists = await user.findOne({ email });
-    if (userExists)
-      return res.status(400).json({ errors: [{ message: "existing user" }] });
+    if (userExists) return res.status(400).json({ msg: "existing user" });
 
     // hash du password
     const salt = await bcrypt.genSalt(10);

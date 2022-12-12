@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect } from "react";
+
 import "./Profile.css";
 import {
   MDBCol,
@@ -11,8 +13,17 @@ import {
   MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import { loadUser } from "../../redux/action/authActions";
+import { useDispatch } from "react-redux";
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.token) {
+      dispatch(loadUser());
+    }
+  }, []);
+
   return (
     <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
       <MDBContainer className="py-5 h-100">
