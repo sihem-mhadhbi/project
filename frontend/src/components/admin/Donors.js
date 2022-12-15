@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getUsers } from "../../redux/action/userAction";
 import styles from "./donor.module.css";
 
 const Donors = () => {
-  const [donors, setDonors] = useState([
+  /*const [donors, setDonors] = useState([
     {
       name: "",
       email: "",
@@ -13,7 +15,21 @@ const Donors = () => {
 
       isAccepted: "",
     },
-  ]);
+  ]);*/
+  /* useEffect(() => {
+    fetch("/api/user/")
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((jsonRes) => setDonors(jsonRes));
+  });*/
+  const { users } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
   return (
     <>
@@ -33,30 +49,37 @@ const Donors = () => {
           </tr>
         </thead>
         <tbody>
-          {donors.map((donor) => (
-            <tr>
-              <td>{donor.name}</td>
-              <td>{donor.email}</td>
-              <td>{donor.bloodgroup}</td>
-              <td>{donor.phone}</td>
-              <td>{donor.address}</td>
-              <td>{donor.isAccepted}</td>
-              <td>
-                <button className={styles.button}>
-                  <Link to="/plasma/login" className={styles.link}>
-                    Update
-                  </Link>
-                </button>
-              </td>
-              <td>
-                <button className={styles.button}>
-                  <Link to="/plasma/loginanddelete" className={styles.link}>
-                    Delete
-                  </Link>
-                </button>
-              </td>
-            </tr>
-          ))}
+          {users.map((donor, index) => {
+            if (donor.role === "isDonor" && donor.isAccepted === "false") {
+              return (
+                <tr key={index}>
+                  <td>{donor.name}</td>
+                  <td>{donor.email}</td>
+                  <td>{donor.bloodgroup}</td>
+                  <td>{donor.address}</td>
+                  <td>{donor.phone}</td>
+                  <td>{donor.isAccepted}</td>
+                  <td>
+                    <button className={styles.button}>
+                      <Link to="/plasma/requesterlogin" className={styles.link}>
+                        Update
+                      </Link>
+                    </button>
+                  </td>
+                  <td>
+                    <button className={styles.button}>
+                      <Link
+                        to="/plasma/requesterloginanddelete"
+                        className={styles.link}
+                      >
+                        Delete
+                      </Link>
+                    </button>
+                  </td>
+                </tr>
+              );
+            }
+          })}
         </tbody>
       </table>
     </>

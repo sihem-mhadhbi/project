@@ -17,8 +17,9 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
-    bloodGroup: {
+    bloodgroup: {
       type: String,
+      default: "A+",
     },
     isAccepted: {
       type: Boolean,
@@ -27,7 +28,8 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["isRecipient", "isDonor", "isAdmin"],
+      role: ["isRecipient", "isDonor", "isAdmin"],
+      default: "isRecipient",
     },
     dueDateRequest: {
       type: Date,

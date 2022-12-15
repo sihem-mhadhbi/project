@@ -158,8 +158,8 @@ const Home = () => {
         </div>
       </div>
       <hr className="featurette-divider" />
-      <footer class="container">
-        <p class="float-end">
+      <footer className="container">
+        <p className="float-end">
           <a href="#">Back to top</a>
         </p>
         <p>

@@ -5,6 +5,7 @@ import {
   LOGIN_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  UPDATE_USER,
   USER_LOADED,
 } from "../action/types";
 
@@ -49,6 +50,15 @@ const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: null,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: state.user.map((userp) =>
+          userp._id === payload._id ? payload : userp
+        ),
+        isAuthenticated: true,
+        loading: false,
       };
     default:
       return state;

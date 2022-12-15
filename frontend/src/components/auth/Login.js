@@ -50,10 +50,7 @@ const Login = () => {
           className="pageSwitcher d-flex justify-content-center
 "
         >
-          <div
-            className="formCenter  pageSwitcherItem "
-            activeClassName="pageSwitcherItem-active"
-          >
+          <div className="formCenter  pageSwitcherItem ">
             <form className="formFields" onSubmit={onSubmit}>
               <div className="formField">
                 <label className="formFieldLabel" htmlFor="email">

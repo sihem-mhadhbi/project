@@ -32,9 +32,9 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+
+            <Route path="/profile" element={<Profile />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/donors" element={<Donors />} />

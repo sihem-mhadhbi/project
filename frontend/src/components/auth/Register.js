@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./Login.css";
@@ -16,19 +16,34 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    bloodGroup: "",
+    bloodgroup: "A+",
+    role: "isReciepient",
     hasAgreed: false,
+    phone: "",
+    address: "",
+    isAccepted: "false",
   });
-  const { name, email, password, bloodGroup, hasAgreed } = user;
+  const { name, email, password, bloodgroup, role, hasAgreed, phone, address } =
+    user;
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (name === "" || email === "" || password === "") {
       alert("please enter all fields");
     } else {
-      const formData = { name, email, password, bloodGroup, hasAgreed };
+      const formData = {
+        name,
+        email,
+        password,
+        bloodgroup,
+        role,
+        hasAgreed,
+        phone,
+        address,
+      };
       dispatch(register(formData));
     }
   };
@@ -67,20 +82,6 @@ const Register = () => {
                 />
               </div>
               <div className="formField">
-                <label className="formFieldLabel" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  className="formFieldInput"
-                  placeholder="Enter your password"
-                  name="password"
-                  value={password}
-                  onChange={onChange}
-                />
-              </div>
-              <div className="formField">
                 <label className="formFieldLabel" htmlFor="email">
                   E-Mail Address
                 </label>
@@ -94,42 +95,92 @@ const Register = () => {
                   onChange={onChange}
                 />
               </div>
-              <div class="form-check form-check-inline">
+              <div className="formField">
+                <label className="formFieldLabel" htmlFor="password">
+                  Password
+                </label>
                 <input
-                  class="form-check-input"
-                  type="radio"
-                  name="inlineRadioOptions"
-                  id="inlineRadio1"
-                  value="option1"
+                  type="password"
+                  id="password"
+                  className="formFieldInput"
+                  placeholder="Enter your password"
+                  name="password"
+                  value={password}
+                  onChange={onChange}
                 />
-                <label class="form-check-label" for="inlineRadio1">
+              </div>
+
+              <div className="formField">
+                <label className="formFieldLabel" htmlFor="phone">
+                  Phone
+                </label>
+                <input
+                  type="Number"
+                  id="phone"
+                  className="formFieldInput"
+                  placeholder="Enter your phone"
+                  name="phone"
+                  value={phone}
+                  onChange={onChange}
+                />
+              </div>
+              <div className="formField">
+                <label className="formFieldLabel" htmlFor="addresse">
+                  Addresse
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  className="formFieldInput"
+                  placeholder="Enter your address"
+                  name="address"
+                  value={address}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="role"
+                  value="isReciepient"
+                  checked={role === "isReciepient"}
+                  onChange={onChange}
+                />
+
+                <label className="form-check-label" htmlFor="inlineRadio1">
                   isReciepient
                 </label>
               </div>
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
-                  name="inlineRadioOptions"
-                  id="inlineRadio1"
-                  value="option1"
+                  name="role"
+                  value="isDonor"
+                  checked={role === "isDonor"}
+                  onChange={onChange}
                 />
-                <label class="form-check-label" for="inlineRadio1">
+                <label className="form-check-label" htmlFor="inlineRadio1">
                   isDonor
                 </label>
               </div>
-              <select class="form-select" aria-label="Default select example">
-                <option selected value={bloodGroup} onChange={onChange}>
-                  BloodGroup
-                </option>
-                <option value="1">A+</option>
-                <option value="2">B+</option>
-                <option value="3">AB+</option>
-                <option value="4">A-</option>
-                <option value="5">B-</option>
-                <option value="6">AB-</option>
-                <option value="7">O+</option>
-                <option value="8">O-</option>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                name="bloodgroup"
+                value={bloodgroup}
+                onChange={onChange}
+              >
+                <option value="A+">A+</option>
+                <option value="B+">B+</option>
+                <option value="AB+">AB+</option>
+                <option value="A-">A-</option>
+                <option value="B-">B-</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
               </select>
               <div className="formField">
                 <label className="formFieldCheckboxLabel">

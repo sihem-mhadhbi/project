@@ -18,7 +18,7 @@ controller.createUser = async (req, res) => {
     email,
     password,
     role,
-    bloodGroup,
+    bloodgroup,
     isAccepted,
     dueDateRequest,
     phone,
@@ -43,7 +43,7 @@ controller.createUser = async (req, res) => {
       email,
       password: hashedPassword,
       role,
-      bloodGroup,
+      bloodgroup,
       isAccepted,
       dueDateRequest,
       phone,
@@ -57,7 +57,7 @@ controller.createUser = async (req, res) => {
         email: User.email,
         role: User.role,
         phone: User.phone,
-        bloodGroup: User.bloodGroup,
+        bloodgroup: User.bloodgroup,
         address: User.address,
 
         token: generateToken(User._id),
@@ -117,7 +117,7 @@ controller.updateUser = async (req, res) => {
     isAdmin,
     isDonor,
     isRecipient,
-    bloodGroup,
+    bloodgroup,
     isAccepted,
     dueDate,
     phone,
@@ -133,7 +133,7 @@ controller.updateUser = async (req, res) => {
   if (isAdmin) userField.isAdmin = isAdmin;
   if (isDonor) userField.isDonor = isDonor;
   if (isRecipient) userField.isRecipient = isRecipient;
-  if (bloodGroup) userField.bloodGroup = bloodGroup;
+  if (bloodgroup) userField.bloodgroup = bloodgroup;
   if (isAccepted) userField.isAccepted = isAccepted;
   if (dueDate) userField.dueDate = dueDate;
   if (phone) userField.phone = phone;

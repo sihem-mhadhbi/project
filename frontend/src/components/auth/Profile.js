@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
-
 import "./Profile.css";
 import {
   MDBCol,
@@ -14,16 +13,44 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import { loadUser } from "../../redux/action/authActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrent, updateUser } from "../../redux/action/userAction";
 
 export default function Profile() {
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.token) {
       dispatch(loadUser());
     }
-  }, []);
-
+  }, []);*/
+  const [userp, setUserp] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    bloodgroup: "A+",
+    address: "",
+    role: "isRecipient",
+    isAccepted: "false",
+  });
+  const { name, email, phone, bloodgroup, address, role, isAccepted } = userp;
+  const onChange = (e) => {
+    setUserp({ ...userp, [e.target.name]: e.target.value });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(userp));
+  };
+  const { user } = useSelector((state) => state.authReducer);
+  //const { name, email, phone, bloodgroup, address, role, isAccepted } = user;
+  const dispatch = useDispatch();
+  /*useEffect(() => {
+    dispatch(loadUser());
+  }, []);*/
+  useEffect(() => {
+    if (user !== null) {
+      setUserp(user);
+    }
+  }, [user]);
   return (
     <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
       <MDBContainer className="py-5 h-100">
@@ -46,76 +73,122 @@ export default function Profile() {
                     style={{ width: "120px" }}
                     fluid
                   />
-                  <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
-                  <MDBCardText></MDBCardText>
+                  <MDBTypography tag="h5">{name}</MDBTypography>
+                  <MDBCardText>
+                    {" "}
+                    {isAccepted ? "Accepted Donor" : "Not Accepted Donor"}
+                  </MDBCardText>
                   <MDBIcon far icon="edit mb-5" />
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody className="p-4">
-                    <form className="formFields">
+                    <form className="formFields" onSubmit={onSubmit}>
                       <div className="formField">
-                        <label className="formFieldLabel" htmlFor="name">
+                        <label className="formFieldLabel1" htmlFor="name">
                           Full Name
                         </label>
                         <input
                           type="text"
                           id="name"
-                          className="formFieldInput"
+                          className="formFieldInput1"
                           placeholder="Enter your full name"
                           name="name"
+                          value={name}
+                          onChange={onChange}
                         />
                       </div>
 
                       <div className="formField">
-                        <label className="formFieldLabel" htmlFor="email">
+                        <label className="formFieldLabel1" htmlFor="email">
                           E-Mail Address
                         </label>
                         <input
                           type="email"
                           id="email"
-                          className="formFieldInput"
+                          className="formFieldInput1"
                           placeholder="Enter your email"
                           name="email"
+                          value={email}
+                          onChange={onChange}
                         />
                       </div>
-                      <div class="form-check form-check-inline">
+                      <div className="formField">
+                        <label className="formFieldLabel1" htmlFor="phone">
+                          Phone
+                        </label>
                         <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="inlineRadio1"
-                          value="option1"
+                          type="Number"
+                          id="phone"
+                          className="formFieldInput1"
+                          placeholder="Enter your phone"
+                          name="phone"
+                          value={phone}
+                          onChange={onChange}
                         />
-                        <label class="form-check-label" for="inlineRadio1">
+                      </div>
+                      <div className="formField">
+                        <label className="formFieldLabel1" htmlFor="address">
+                          Address
+                        </label>
+                        <input
+                          type="text"
+                          id="address"
+                          className="formFieldInput1"
+                          placeholder="Enter your address"
+                          name="address"
+                          value={address}
+                          onChange={onChange}
+                        />
+                      </div>
+
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="role"
+                          value="isReciepient"
+                          checked={role === "isReciepient"}
+                          onChange={onChange}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="inlineRadio1"
+                        >
                           isReciepient
                         </label>
                       </div>
-                      <div class="form-check form-check-inline">
+                      <div className="form-check form-check-inline">
                         <input
-                          class="form-check-input"
+                          className="form-check-input"
                           type="radio"
-                          name="inlineRadioOptions"
-                          id="inlineRadio1"
-                          value="option1"
+                          name="role"
+                          value="isDonor"
+                          checked={role === "isDonor"}
+                          onChange={onChange}
                         />
-                        <label class="form-check-label" for="inlineRadio1">
+                        <label
+                          className="form-check-label"
+                          htmlFor="inlineRadio1"
+                        >
                           isDonor
                         </label>
                       </div>
                       <hr />
                       <select
-                        class="form-select"
+                        className="form-select"
                         aria-label="Default select example"
+                        name="bloodgroup"
+                        value={bloodgroup}
+                        onChange={onChange}
                       >
-                        <option selected>BloodGroup</option>
-                        <option value="1">A+</option>
-                        <option value="2">B+</option>
-                        <option value="3">AB+</option>
-                        <option value="4">A-</option>
-                        <option value="5">B-</option>
-                        <option value="6">AB-</option>
-                        <option value="7">O+</option>
-                        <option value="8">O-</option>
+                        <option value="A+">A+</option>
+                        <option value="B+">B+</option>
+                        <option value="AB+">AB+</option>
+                        <option value="A-">A-</option>
+                        <option value="B-">B-</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
                       </select>
                       <hr />
                       <div className="formField">
