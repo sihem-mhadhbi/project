@@ -4,6 +4,7 @@ import {
   CLEAR_ERRORS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   USER_LOADED,
@@ -47,7 +48,7 @@ export const login = (formData) => async (dispatch) => {
 };
 
 export const logout = () => {
-  return {};
+  return { type: LOGOUT };
 };
 
 export const clearError = () => {

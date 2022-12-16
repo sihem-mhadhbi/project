@@ -34,6 +34,7 @@ export const updateUser = (userp) => async (dispatch) => {
     console.log(res.data);
     dispatch({ type: UPDATE_USER, payload: res.data });
   } catch (err) {
-    dispatch({ type: USER_ERROR, payload: err.response.data });
+    console.log(err);
+    dispatch({ type: USER_ERROR });
   }
 };

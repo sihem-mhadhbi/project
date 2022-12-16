@@ -83,7 +83,12 @@ const Login = () => {
               </div>
 
               <div className="formField">
-                <button className="formFieldButton">Login</button>{" "}
+                <button
+                  className="formFieldButton"
+                  onClick={() => window.location.reload(false)}
+                >
+                  Login
+                </button>{" "}
                 <Link to="/register" className="formFieldLink">
                   Create an account
                 </Link>

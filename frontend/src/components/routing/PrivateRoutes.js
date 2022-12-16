@@ -6,7 +6,7 @@ const PrivateRoutes = () => {
   const { loading, isAuthenticated } = useSelector(
     (state) => state.authReducer
   );
-  return isAuthenticated && !loading ? <Outlet /> : <Navigate to="/profile" />;
+  return isAuthenticated && !loading ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoutes;

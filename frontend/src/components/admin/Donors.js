@@ -50,7 +50,7 @@ const Donors = () => {
         </thead>
         <tbody>
           {users.map((donor, index) => {
-            if (donor.role === "isDonor" && donor.isAccepted === "false") {
+            if (donor.role === "isDonor" && donor.isAccepted === false) {
               return (
                 <tr key={index}>
                   <td>{donor.name}</td>

@@ -59,6 +59,7 @@ controller.createUser = async (req, res) => {
         phone: User.phone,
         bloodgroup: User.bloodgroup,
         address: User.address,
+        isAccepted: User.isAccepted,
 
         token: generateToken(User._id),
       });
@@ -115,8 +116,8 @@ controller.updateUser = async (req, res) => {
     email,
     password,
     isAdmin,
-    isDonor,
-    isRecipient,
+    address,
+    role,
     bloodgroup,
     isAccepted,
     dueDate,
@@ -130,14 +131,13 @@ controller.updateUser = async (req, res) => {
   if (name) userField.name = name;
   if (email) userField.email = email;
   if (password) userField.password = password;
-  if (isAdmin) userField.isAdmin = isAdmin;
-  if (isDonor) userField.isDonor = isDonor;
-  if (isRecipient) userField.isRecipient = isRecipient;
   if (bloodgroup) userField.bloodgroup = bloodgroup;
   if (isAccepted) userField.isAccepted = isAccepted;
   if (dueDate) userField.dueDate = dueDate;
   if (phone) userField.phone = phone;
   if (date) userField.date = date;
+  if (address) userField.address = address;
+  if (role) userField.role = role;
 
   try {
     let users = await user.findById(id);
