@@ -199,12 +199,7 @@ const Register = () => {
               </div>
 
               <div className="formField">
-                <button
-                  className="formFieldButton"
-                  onClick={() => window.location.reload(false)}
-                >
-                  Register
-                </button>{" "}
+                <button className="formFieldButton">Register</button>{" "}
                 <Link to="/login" className="formFieldLink">
                   I'm already member
                 </Link>

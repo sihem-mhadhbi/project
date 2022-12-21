@@ -5,6 +5,7 @@ import { logout } from "../../redux/action/authActions";
 
 export const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.authReducer);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLogout = () => {
@@ -35,6 +36,7 @@ export const Navbar = () => {
       </form>
     </Fragment>
   );
+
   const authLinks = (
     <Fragment>
       <form className="d-flex">
@@ -53,6 +55,39 @@ export const Navbar = () => {
           onClick={onLogout}
         >
           Logout
+        </button>
+      </form>
+    </Fragment>
+  );
+  const admin = (
+    <Fragment>
+      <form className="d-flex">
+        <button
+          style={{ margin: 6 }}
+          className="btn btn-outline-danger"
+          type="submit"
+        >
+          <Link className="nav-link" to="/dashboard">
+            dashbord
+          </Link>
+        </button>
+        <button
+          style={{ margin: 6 }}
+          className="btn btn-outline-danger"
+          type="submit"
+        >
+          <Link className="nav-link" to="/profile">
+            profile
+          </Link>
+        </button>
+        <button
+          style={{ margin: 6 }}
+          className="btn btn-outline-danger"
+          type="submit"
+        >
+          <Link className="nav-link" to="/login">
+            Logout
+          </Link>
         </button>
       </form>
     </Fragment>

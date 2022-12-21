@@ -1,4 +1,9 @@
-import { GET_USER, SET_CURRENT, USER_ERROR } from "../action/types";
+import {
+  GET_USER,
+  SET_CURRENT,
+  UPDATE_REQUEST,
+  USER_ERROR,
+} from "../action/types";
 
 const initialState = {
   users: [],
@@ -23,6 +28,14 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+      };
+    case UPDATE_REQUEST:
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user._id === payload._id ? payload : user
+        ),
+        loading: false,
       };
     default:
       return state;

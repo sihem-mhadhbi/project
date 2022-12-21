@@ -36,6 +36,7 @@ const Login = () => {
     if (isAuthenticated) {
       navigate("/profile");
     }
+
     if (error && error.msg === "Invalid credential") {
       dispatch(setAlert(error.msg, "danger"));
       dispatch(clearError());
@@ -83,12 +84,7 @@ const Login = () => {
               </div>
 
               <div className="formField">
-                <button
-                  className="formFieldButton"
-                  onClick={() => window.location.reload(false)}
-                >
-                  Login
-                </button>{" "}
+                <button className="formFieldButton">Login</button>{" "}
                 <Link to="/register" className="formFieldLink">
                   Create an account
                 </Link>

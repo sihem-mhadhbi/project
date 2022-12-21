@@ -8,24 +8,26 @@ import { Alert } from "./components/layout/Alert";
 import Profile from "./components/auth/Profile";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/action/authActions";
-import PrivateRoutes from "./components/routing/PrivateRoutes";
 import Dashboard from "./components/admin/Dashboard";
 import Requests from "./components/admin/Requests";
 import Donors from "./components/admin/Donors";
 import Accepted from "./components/admin/Accepted";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.token) {
       dispatch(loadUser());
     }
-  }, []);
+  }, [location]);
   return (
     <div className="App">
       <Fragment>
         <Navbar />
         <Alert />
+
         <div>
           <Routes>
             <Route path="/" element={<Home />} />

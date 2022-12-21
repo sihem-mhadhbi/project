@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
 import "./Profile.css";
 import {
@@ -12,9 +12,9 @@ import {
   MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import { loadUser } from "../../redux/action/authActions";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrent, updateUser } from "../../redux/action/userAction";
+import { updateUser } from "../../redux/action/userAction";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   /* const dispatch = useDispatch();
@@ -46,6 +46,22 @@ export default function Profile() {
   /*useEffect(() => {
     dispatch(loadUser());
   }, []);*/
+  const accept = (
+    <Fragment>{isAccepted ? "Accepted Donor" : "Not Accepted Donor"}</Fragment>
+  );
+  const admin = (
+    <Fragment>
+      <button
+        style={{ margin: "auto" }}
+        className="btn btn-outline-danger"
+        type="submit"
+      >
+        <Link className="nav-link" to="/dashboard">
+          Dashboard
+        </Link>
+      </button>
+    </Fragment>
+  );
   useEffect(() => {
     if (user !== null) {
       setUserp(user);
@@ -77,7 +93,7 @@ export default function Profile() {
                   <MDBTypography tag="h5">{name}</MDBTypography>
                   <MDBCardText>
                     {" "}
-                    {isAccepted ? "Accepted Donor" : "Not Accepted Donor"}
+                    {role === "isAdmin" ? admin : accept}
                   </MDBCardText>
                   <MDBIcon far icon="edit mb-5" />
                 </MDBCol>
@@ -141,57 +157,62 @@ export default function Profile() {
                           onChange={onChange}
                         />
                       </div>
-
-                      <div className="form-check form-check-inline">
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="role"
-                          value="isReciepient"
-                          checked={role === "isReciepient"}
-                          onChange={onChange}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="inlineRadio1"
-                        >
-                          isReciepient
-                        </label>
-                      </div>
-                      <div className="form-check form-check-inline">
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="role"
-                          value="isDonor"
-                          checked={role === "isDonor"}
-                          onChange={onChange}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="inlineRadio1"
-                        >
-                          isDonor
-                        </label>
-                      </div>
-                      <hr />
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        name="bloodgroup"
-                        value={bloodgroup}
-                        onChange={onChange}
-                      >
-                        <option value="A+">A+</option>
-                        <option value="B+">B+</option>
-                        <option value="AB+">AB+</option>
-                        <option value="A-">A-</option>
-                        <option value="B-">B-</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                      </select>
-                      <hr />
+                      {role === "isAdmin" ? (
+                        ""
+                      ) : (
+                        <Fragment>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="role"
+                              value="isReciepient"
+                              checked={role === "isReciepient"}
+                              onChange={onChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="inlineRadio1"
+                            >
+                              isReciepient
+                            </label>
+                          </div>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="role"
+                              value="isDonor"
+                              checked={role === "isDonor"}
+                              onChange={onChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="inlineRadio1"
+                            >
+                              isDonor
+                            </label>
+                          </div>
+                          <hr />
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            name="bloodgroup"
+                            value={bloodgroup}
+                            onChange={onChange}
+                          >
+                            <option value="A+">A+</option>
+                            <option value="B+">B+</option>
+                            <option value="AB+">AB+</option>
+                            <option value="A-">A-</option>
+                            <option value="B-">B-</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                          </select>
+                          <hr />
+                        </Fragment>
+                      )}
                       <div className="formField">
                         <button
                           className="formFieldButton "
@@ -204,11 +225,11 @@ export default function Profile() {
                         </button>
 
                         <div
-                          class="modal fade"
+                          className="modal fade"
                           id="staticBackdrop"
                           data-bs-backdrop="static"
                           data-bs-keyboard="false"
-                          tabindex="-1"
+                          tabIndex="-1"
                           aria-labelledby="staticBackdropLabel"
                           aria-hidden="true"
                         >
