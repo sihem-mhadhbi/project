@@ -29,7 +29,7 @@ export default function Profile() {
     phone: "",
     bloodgroup: "A+",
     address: "",
-    role: "isRecipient",
+    role: "isReciepient",
     isAccepted: "false",
   });
   const { name, email, phone, bloodgroup, address, role, isAccepted } = userp;
@@ -47,7 +47,15 @@ export default function Profile() {
     dispatch(loadUser());
   }, []);*/
   const accept = (
-    <Fragment>{isAccepted ? "Accepted Donor" : "Not Accepted Donor"}</Fragment>
+    <Fragment>
+      {isAccepted === true && role === "isDonor"
+        ? "Accepted Donor"
+        : isAccepted === false && role === "isDonor"
+        ? "Not Accepted Donor"
+        : isAccepted === true && role === "isReciepient"
+        ? "Approuved"
+        : "Not approuved"}
+    </Fragment>
   );
   const admin = (
     <Fragment>

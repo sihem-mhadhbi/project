@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-
+import "../auth/Profile.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -17,9 +17,16 @@ const Dashboard = () => {
     phone: "",
     bloodgroup: "A+",
     address: "",
-    role: "isRecipient",
+    role: "isReciepient",
     isAccepted: false,
   });
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (current !== null) dispatch(updateRequest(user));
+  };
 
   const dispatch = useDispatch();
 
@@ -41,22 +48,158 @@ const Dashboard = () => {
                 <td>
                   <button
                     type="button"
+                    className="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
                     value="Donor"
-                    className={
-                      menu === "Donor" ? "btn btn-danger" : "btn btn-light"
-                    }
                     onClick={() => {
                       dispatch(setCurrent(donor));
-
-                      setUser({
-                        isAccepted: true,
-                      });
-                      dispatch(updateRequest(user));
                     }}
                   >
                     {donor.isAccepted ? "accepted" : "Not Accepted"}
                   </button>
                 </td>
+                <Fragment>
+                  <div
+                    className="modal fade"
+                    id="exampleModal"
+                    tabIndex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <div className="formCenter">
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                            <form className="formFields" onSubmit={onSubmit}>
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="name"
+                                >
+                                  Full Name
+                                </label>
+                                <input
+                                  type="text"
+                                  id="name"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your full name"
+                                  name="name"
+                                  defaultValue={user.name}
+                                />
+                              </div>
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="email"
+                                >
+                                  E-Mail Address
+                                </label>
+                                <input
+                                  type="email"
+                                  id="email"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your email"
+                                  name="email"
+                                  defaultValue={user.email}
+                                />
+                              </div>
+
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="phone"
+                                >
+                                  Phone
+                                </label>
+                                <input
+                                  type="Number"
+                                  id="phone"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your phone"
+                                  name="phone"
+                                  defaultValue={user.phone}
+                                />
+                              </div>
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="addresse"
+                                >
+                                  Addresse
+                                </label>
+                                <input
+                                  type="text"
+                                  id="address"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your address"
+                                  name="address"
+                                  defaultValue={user.address}
+                                />
+                              </div>
+
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input1"
+                                  type="radio"
+                                  name="isAccepted"
+                                  value="true"
+                                  checked={user.isAccepted === "true"}
+                                  onChange={onChange}
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="inlineRadio1"
+                                >
+                                  Accepted
+                                </label>
+                              </div>
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input1"
+                                  type="radio"
+                                  name="isAccepted"
+                                  value="false"
+                                  checked={user.isAccepted === "false"}
+                                  onChange={onChange}
+                                />
+                                <label
+                                  className="form-check-label1"
+                                  htmlFor="inlineRadio1"
+                                >
+                                  Not Accepted
+                                </label>
+                              </div>
+                              <div className="modal-footer">
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Close
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Save changes
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Fragment>
               </tr>
             );
           }
@@ -86,27 +229,157 @@ const Dashboard = () => {
                   <button
                     type="button"
                     value="Donor"
-                    className={
-                      menu === "Donor" ? "btn btn-danger" : "btn btn-light"
-                    }
+                    className="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
                     onClick={() => {
                       dispatch(setCurrent(Reciepient));
-
-                      setUser({
-                        name: "",
-                        email: "",
-                        phone: "",
-                        bloodgroup: "",
-                        address: "",
-                        role: "",
-                        isAccepted: true,
-                      });
-                      dispatch(updateRequest(user));
                     }}
                   >
-                    {Reciepient.isAccepted ? "accepted" : "Not Accepted"}
+                    {Reciepient.isAccepted ? "Approuved" : "Not Approuved"}
                   </button>
                 </td>
+                <Fragment>
+                  <div
+                    className="modal fade"
+                    id="exampleModal"
+                    tabIndex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <div className="formCenter">
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                            <form className="formFields" onSubmit={onSubmit}>
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="name"
+                                >
+                                  Full Name
+                                </label>
+                                <input
+                                  type="text"
+                                  id="name"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your full name"
+                                  name="name"
+                                  defaultValue={user.name}
+                                />
+                              </div>
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="email"
+                                >
+                                  E-Mail Address
+                                </label>
+                                <input
+                                  type="email"
+                                  id="email"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your email"
+                                  name="email"
+                                  defaultValue={user.email}
+                                />
+                              </div>
+
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="phone"
+                                >
+                                  Phone
+                                </label>
+                                <input
+                                  type="Number"
+                                  id="phone"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your phone"
+                                  name="phone"
+                                  defaultValue={user.phone}
+                                />
+                              </div>
+                              <div className="formField">
+                                <label
+                                  className="formFieldLabel1"
+                                  htmlFor="addresse"
+                                >
+                                  Addresse
+                                </label>
+                                <input
+                                  type="text"
+                                  id="address"
+                                  className="formFieldInput1"
+                                  placeholder="Enter your address"
+                                  name="address"
+                                  defaultValue={user.address}
+                                />
+                              </div>
+
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input1"
+                                  type="radio"
+                                  name="isAccepted"
+                                  value="true"
+                                  checked={user.isAccepted === "true"}
+                                  onChange={onChange}
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="inlineRadio1"
+                                >
+                                  Approuved
+                                </label>
+                              </div>
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input1"
+                                  type="radio"
+                                  name="isAccepted"
+                                  value="false"
+                                  checked={user.isAccepted === "false"}
+                                  onChange={onChange}
+                                />
+                                <label
+                                  className="form-check-label1"
+                                  htmlFor="inlineRadio1"
+                                >
+                                  Not Approuved
+                                </label>
+                              </div>
+                              <div className="modal-footer">
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Close
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Save changes
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Fragment>
               </tr>
             );
           }
@@ -129,7 +402,50 @@ const Dashboard = () => {
                 <td>{donor.address}</td>
                 <td>{donor.date}</td>
 
-                <td>{donor.isAccepted ? "accepted" : "Not Accepted"}</td>
+                <td>
+                  {" "}
+                  <button
+                    type="button"
+                    value="Donor"
+                    className="btn btn-success"
+                  >
+                    {donor.isAccepted ? "Accepted" : "Not Accepted"}
+                  </button>
+                </td>
+              </tr>
+            );
+          }
+        })}
+      </tbody>
+    </Fragment>
+  );
+  const test4 = (
+    <Fragment>
+      <tbody>
+        {users.map((Reciepient, index) => {
+          if (
+            Reciepient.role === "isReciepient" &&
+            Reciepient.isAccepted === true
+          ) {
+            return (
+              <tr key={index}>
+                <td>{Reciepient.name}</td>
+                <td>{Reciepient.email}</td>
+                <td>{Reciepient.bloodgroup}</td>
+                <td>{Reciepient.phone}</td>
+
+                <td>{Reciepient.address}</td>
+                <td>{Reciepient.date}</td>
+
+                <td>
+                  <button
+                    type="button"
+                    value="Donor"
+                    className="btn btn-success"
+                  >
+                    {Reciepient.isAccepted ? "Approuved" : "Not Approuved"}
+                  </button>
+                </td>
               </tr>
             );
           }
@@ -143,7 +459,15 @@ const Dashboard = () => {
     if (current !== null) {
       setUser(current);
     } else {
-      setUser({ isAccepted: "false" });
+      setUser({
+        name: "",
+        email: "",
+        phone: "",
+        bloodgroup: "A+",
+        address: "",
+        role: "isRecipient",
+        isAccepted: false,
+      });
     }
   }, [current]);
 
@@ -152,19 +476,37 @@ const Dashboard = () => {
       <div
         className="d-flex justify-content-start
         p-3 bg-light "
-        style={{ width: "400px" }}
+        style={{ width: "200px" }}
       >
         <ul className="nav nav-pills flex-column mb-auto">
           <li>
             <button
               type="button"
-              class={menu === "Reciepient" ? "btn btn-danger" : "btn btn-light"}
+              className={
+                menu === "Reciepient" ? "btn btn-danger" : "btn btn-light"
+              }
               value="requests"
               onClick={() => {
                 setMenu("Reciepient");
               }}
             >
               Requests
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              className={
+                menu === "acceptedReciepient"
+                  ? "btn btn-danger"
+                  : "btn btn-light"
+              }
+              value="requests"
+              onClick={() => {
+                setMenu("acceptedReciepient");
+              }}
+            >
+              Accepted Requests
             </button>
           </li>
           <li>
@@ -182,7 +524,7 @@ const Dashboard = () => {
           <li>
             <button
               type="button"
-              class={
+              className={
                 menu === "AcceptedDonors" ? "btn btn-danger" : "btn btn-light"
               }
               value="acceptedDonor"
@@ -238,7 +580,13 @@ const Dashboard = () => {
               <th scope="col">Accepted</th>
             </tr>
           </thead>
-          {menu === "Donor" ? test1 : menu === "Reciepient" ? test2 : test3}
+          {menu === "Donor"
+            ? test1
+            : menu === "Reciepient"
+            ? test2
+            : menu === "acceptedReciepient"
+            ? test4
+            : test3}
         </table>
       </div>
     </>
